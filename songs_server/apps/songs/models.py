@@ -4,7 +4,6 @@ import re
 import bcrypt
 
 
-email_regex = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
 
 class SongManager(models.Manager):
@@ -25,6 +24,9 @@ class Song(models.Model):
     numAdded = models.ManyToManyField(User, related_name = "users")
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
+
+    objects = SongManager()
+
 
 
 

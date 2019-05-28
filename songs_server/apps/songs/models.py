@@ -14,7 +14,7 @@ class SongManager(models.Manager):
 class Song(models.Model):
     artist = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
-    user = models.ForeignKey(User, related_name = "songs")
+    user = models.ForeignKey(User, related_name = "songs", on_delete=models.CASCADE)
     numAdded = models.ManyToManyField(User, related_name = "users")
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)

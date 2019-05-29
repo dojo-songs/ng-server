@@ -36,3 +36,6 @@ def login(req):
     }
     json_user = json.dumps(user)
     return HttpResponse(json_user, status=200, content_type="application/json")
+
+def addSong(req):
+    HttpResponse("hello you made it songs")

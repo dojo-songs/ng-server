@@ -1,4 +1,4 @@
 Django2/
 *.pyc
 __pycache__/
-*.sqlite3
+

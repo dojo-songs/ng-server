@@ -16,6 +16,7 @@ def create(req):
     if errors:
         return HttpResponse(json.dumps(errors), status=400, content_type='application/json')
     entire_user = User.objects.easy_create(post_data)
+    
     user = {
         'first_name': entire_user.first_name,
         'id': entire_user.id,

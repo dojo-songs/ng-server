@@ -68,3 +68,7 @@ def user_add_song(req):
     user.songs_added.add(Song.objects.get(id=post_data['song_id']))
     data = serializers.serialize('json', user.songs_added.all())
     return HttpResponse(data, status=200, content_type='application/json')
+
+
+def songDetails(req):
+    return HttpResponse("you made it to song details")

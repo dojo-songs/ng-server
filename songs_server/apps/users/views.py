@@ -1,6 +1,7 @@
 from django.shortcuts import HttpResponse
-from .models import User
-from .models import UserManager
+from .models import *
+
+
 from django.core import serializers
 import json
 
@@ -37,5 +38,33 @@ def login(req):
     json_user = json.dumps(user)
     return HttpResponse(json_user, status=200, content_type="application/json")
 
-def addSong(req):
-    HttpResponse("hello you made it songs")
+
+def create_song(req):
+    post_data = json.loads(req.body.decode())
+    print(post_data)
+    errors = Song.objects.addSongValidation(post_data)
+    
+
+    if errors:
+        return HttpResponse(json.dumps(errors), status=400, content_type='application/json')
+
+    entire_song = Song.objects.easy_create(post_data)
+    song = {
+        'id': entire_song.id,
+        'artist': entire_song.artist,
+        'title': entire_song.title,
+    }
+    json_song = json.dumps(song)
+    return HttpResponse(json_song, status=200, content_type="application/json")
+
+def get_songs(req):
+    all_songs = Song.objects.all()
+    data = serializers.serialize('json', all_songs)
+    return HttpResponse(data, status=200, content_type='application/json')
+
+def user_add_song(req):
+    post_data = json.loads(req.body.decode())
+    user = User.objects.get(id=post_data['user_id'])
+    user.songs_added.add(Song.objects.get(id=post_data['song_id']))
+    data = serializers.serialize('json', user.songs_added.all())
+    return HttpResponse(data, status=200, content_type='application/json')
